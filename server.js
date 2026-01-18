@@ -18,19 +18,14 @@ app.use(express.json());
 // Enable CORS
 app.use(
   cors({
-    origin: "*", // 🔒 Change to frontend URL when deployed
+    origin: "*", // 🔒 Change to Netlify URL later for security
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
 
 /* ===========================
-   ROUTES
-=========================== */
-app.use("/api", routes);
-
-/* ===========================
-   HEALTH CHECK
+   HEALTH CHECK (ROOT)
 =========================== */
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -38,6 +33,11 @@ app.get("/", (req, res) => {
     message: "VTU Backend is running 🚀"
   });
 });
+
+/* ===========================
+   API ROUTES
+=========================== */
+app.use("/api", routes);
 
 /* ===========================
    GLOBAL ERROR HANDLER
@@ -55,5 +55,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`✅ Backend running on http://localhost:${PORT}`);
+  console.log(`✅ Backend running on port ${PORT}`);
 });
